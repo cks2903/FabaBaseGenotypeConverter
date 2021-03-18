@@ -52,6 +52,7 @@ Step 2:
 Create the needed environments by typing: 
 
 ```
+cd FabaBaseGenotypeConverter
 chmod u+x Prepare.sh
 
 ./Prepare.sh
