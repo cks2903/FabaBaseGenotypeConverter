@@ -31,7 +31,7 @@ geno2=pd.DataFrame(geno1)
 # If sum= 3 then it is a 1
 # if sum = 2 then it is a 0
 # if sum =0 then it is NA
-newgenotype=np.empty((row,(col-4)/2,))
+newgenotype=np.empty((row,int((col-4)/2),))
 
 count=0
 for i in range(0,len(geno2.columns),2): 
