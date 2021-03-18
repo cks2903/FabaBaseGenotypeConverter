@@ -39,14 +39,13 @@ To install the program you need to follow these steps:
 Step 1:
 
 Open the command line and navigate to the folder where you want the conversion to take place.
-Your input genotype file downloaded from FabaBase should be in the same folder.
-
 
 Clone the github repository to the location:
 ```
 git clone https://github.com/cks2903/FabaBaseGenotypeConverter.git
 
 ```
+
 Step 2:
 
 Create the needed environments by typing: 
@@ -74,7 +73,7 @@ This should say "Started 12 workers, listening on port 12345". Keep the window o
 Step 5:
 Define the inputs as follows:
 ```
-file="[the genotype file you have from FabaBase]"
+file="[path/genotype file you have from FabaBase]"
 export file
 missingness="[the missingness threshold you want]"
 export missingness
@@ -84,6 +83,8 @@ You are now ready to run the pipeline. You do so by typing:
 ```
 gwf run
 ```
+
+You should now see your screen say "Submitting target Step1", "Submitting target Step2" etc. until 6 steps have been submitted.
 By writing
 ```
 gwf status
@@ -98,7 +99,7 @@ you can follow how far the workflow has come. When All steps read "complete" you
 ```
 file="field-trial-genotype-data-by-map-name--NV644xNV153_F6_RIL_Axiom_Vfaba_v2--profaba.tsv"
 export file
-missingness="0.10" # applying a missingess filter of 10%
+missingness="0.10" # applying a missingness filter of 10%
 export missingness
 
 gwf run
