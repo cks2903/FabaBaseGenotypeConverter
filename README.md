@@ -47,6 +47,7 @@ Clone the github repository to the location:
 git clone https://github.com/cks2903/FabaBaseGenotypeConverter.git
 
 ```
+Step 2:
 
 Create the needed environments by typing: 
 
@@ -55,18 +56,21 @@ chmod u+x Prepare.sh
 
 ./Prepare.sh
 ```
-
+Step 3:
 Source the needed environment:
 
 ```
 source activate python3
 ```
+Step 4:
 Now open up an additinal command-line window and write:
 ```
 gwf workers
 ```
 
 This should say "Started 12 workers, listening on port 12345". Keep the window open but navigate to the other one.
+
+Step 5:
 Define the inputs as follows:
 ```
 file="[the genotype file you have from FabaBase]"
@@ -74,8 +78,8 @@ export file
 missingness="[the missingness threshold you want]"
 export missingness
 ```
+You are now ready to run the pipeline. You do so by typing:
 
-Run workflow
 ```
 gwf run
 ```
