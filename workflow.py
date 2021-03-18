@@ -15,57 +15,47 @@ gwf=Workflow()
 def LongtoWide(genotypefileFabaBase, outputs):
     inputs = [genotypefileFabaBase]
     outputs = outputs
-    options = {
-        'account': 'nchain',
-        'memory': '8g',
-        'walltime': '08:00:00'
-    }
-
+    options={}
+    
     spec = '''
-    source ~/miniconda3/etc/profile.d/conda.sh
-    conda activate Rprogram
+    source activate Rprogram
     Rscript longtowide.R {genotypefileFabaBase} 
     '''.format(genotypefileFabaBase=genotypefileFabaBase,outputs=outputs)
 
-    return inputs, outputs, options, spec
+    return inputs, outputs, options,spec
 
 def MakePedAndMapFiles(genotypefilecsv, outputs):
     inputs = [genotypefilecsv]
     outputs = outputs
-    options = {
-        'account': 'nchain',
-        'memory': '250g',
-        'cores': '10',
-        'walltime': '08:00:00'
-    }
+    options={}
 
     spec = '''
-    source ~/miniconda3/etc/profile.d/conda.sh
-    conda activate Rprogram
+    source activate Rprogram
     Rscript MakePedAndMapFile.R {missingness_threshold_snps} 
-    '''.format(missingness_threshold_snps=param_two)
+    '''.format(missingness_threshold_snps=param_two,outputs=outputs)
 
     return inputs, outputs, options, spec
+
+
 
 def FinishPedAndMapFiles(inputs,outputs):
     inputs = inputs
     outputs = outputs
-    options = {
-        'account': 'nchain',
-    }
+    options = {}
     spec = '''
+    chmod u+x finishped.sh
     ./finishped.sh
     '''
 
-    return inputs, outputs, options, spec
+    return inputs, outputs, options, spec    
 
 def PlinkPrep(inputs,outputs):
     inputs = inputs
     outputs = outputs
-    options = {
-        'account': 'nchain',
-    }
+    options = {}
     spec = '''
+    source activate plink
+    chmod u+x plinkGenotypeConv.sh
     ./plinkGenotypeConv.sh
     '''
 
@@ -75,44 +65,23 @@ def PlinkPrep(inputs,outputs):
 def GenotypeFileReady(genofile, pedsix,outputs):
     inputs = [genofile,pedsix]
     outputs = outputs
-    options = {
-        'account': 'nchain',
-        'cores': '10',
-    }
-
+    options = {}
     spec = '''
-    source ~/miniconda2/etc/profile.d/conda.sh
-    conda activate myproject
+    source activate python3
     python MakeGenofileReadyforGRM.py {genofile} 
-    '''.format(genofile=genofile)
+    '''.format(genofile=genofile,pedsix=pedsix,outputs=outputs)
 
-    return inputs, outputs, options, spec
+    return inputs, outputs, options, spec    
 
 def GenericGenotypefile(map, genotypes,outputs):
     inputs = [map,genotypes]
     outputs = outputs
-    options = {
-        'account': 'nchain',
-        'cores': '10',
-    }
+    options = {}
 
     spec = '''
+    chmod u+x MakeGenericGenotypefile.sh
     ./MakeGenericGenotypefile.sh
     '''
-
-    return inputs, outputs, options, spec
-
-def Cleaning(file1, file2, file3, file4, file5, file6, file7, file8,outputs):
-    inputs = [file1,file2,file3,file4,file5,file6,file7,file8]
-    outputs = outputs
-    options = {
-        'account': 'nchain',
-        'cores': '10',
-    }
-
-    spec = '''
-    ./cleaning.sh {file1} {file2} {file3} {file4} {file5} {file6} {file7} {file8} 
-    '''.format(file1=file1,file2=file2,file3=file3,file4=file4,file5=file5,file6=file6,file7=file7,file8=file8)
 
     return inputs, outputs, options, spec
 
@@ -126,7 +95,6 @@ gwf.target_from_template("Step1",
 gwf.target_from_template("Step2",
                          MakePedAndMapFiles(genotypefilecsv="Genotypefile.csv",
                          outputs=["genotypes.map","intermediate.txt","pedsixcol.txt"]))
-
 
 # Finish ped files
 gwf.target_from_template("Step3",
@@ -143,17 +111,7 @@ gwf.target_from_template("Step5",
                          GenotypeFileReady(genofile="genotypes_numeric.tped",pedsix="pedsixcol.txt",
                          outputs=["genotypes_for_GRM.csv"]))
 
-
 # Make a genetic genotype file
 gwf.target_from_template("Step6",
                          GenericGenotypefile(map="genotypes.map",genotypes="genotypes_for_GRM.csv",
                          outputs=["GenericGenotypeFile.csv"]))
-
-# Cleaning up
-#gwf.target_from_template("Step7",
-                    #     Cleaning(file1="genotypes_for_GRM.csv", file2="genotypes_numeric.tped", file3="genotypes_numeric.tfam", file4="genotypes_numeric.nosex", file5="genotypes_numeric.log", file6="pastedgenofile.txt",file7="pedsixcol.txt",file8="intermediate.txt",
-                    #     outputs=[]))
-
-
-
-

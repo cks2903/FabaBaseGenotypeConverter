@@ -1,0 +1,9 @@
+name: plink
+channels:
+  - bioconda
+  - gwforg
+  - defaults
+  - conda-forge
+dependencies:
+  - plink=1.90b6.18=h0b31af3_0
+prefix: /Users/CathrineKiel/miniconda3/envs/plink
