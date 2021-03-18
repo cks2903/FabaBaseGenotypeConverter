@@ -89,7 +89,7 @@ By writing
 ```
 gwf status
 ```
-you can follow how far the workflow has come. When All steps read "complete" your files should be ready and in the current directory
+you can follow how far the workflow has come. When All steps read "Completed" your files should be ready and in the current directory
 
 
 
@@ -105,14 +105,3 @@ export missingness
 gwf run
 ```
 
-
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
