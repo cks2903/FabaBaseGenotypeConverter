@@ -105,3 +105,56 @@ export missingness
 gwf run
 ```
 
+## If problems 
+If you have problems running the workflow, i.e. 'gwf status' report steps as "shouldrun"
+Run the steps one by one as follows:
+
+Step1
+```
+conda deactivate
+source activate Rprogram
+Rscript longtowide.R [path/genotype file you have from FabaBase]
+```
+Proceed to step 2 when the "Genotypefile.csv" is generated
+
+
+Step2
+```
+conda deactivate
+source activate Rprogram
+Rscript MakePedAndMapFile.R [missingness_threshold_snps] 
+```
+Proceed to step 3 when the "genotypes.map", "intermediate.txt" and "pedsixcol.txt" files are  generated
+
+
+Step3
+```
+chmod u+x finishped.sh
+./finishped.sh
+```
+Proceed to step 4 when "genotypes.ped" is generated
+
+Step4
+```
+conda deactive
+source activate plink
+chmod u+x plinkGenotypeConv.sh
+./plinkGenotypeConv.sh
+```
+Proceed to step 5 when the files "genotypes_numeric.tped","genotypes_numeric.tfam","genotypes_numeric.nosex" and "genotypes_numeric.log" are generated
+
+Step5
+```
+conda deactivate
+source activate python3
+python MakeGenofileReadyforGRM.py "genotypes_numeric.tped"
+
+```
+Proceed to step 6 when the file "genotypes_for_GRM.csv" is generated 
+
+Step6
+```
+chmod u+x MakeGenericGenotypefile.sh
+./MakeGenericGenotypefile.sh
+```
+Should generate the file called "GenericGenotypeFile.csv". 
