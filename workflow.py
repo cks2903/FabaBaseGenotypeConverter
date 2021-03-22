@@ -18,7 +18,7 @@ def LongtoWide(genotypefileFabaBase, outputs):
     options={}
     
     spec = '''
-    source activate Rprogram
+    conda activate Rprogram
     Rscript longtowide.R {genotypefileFabaBase} 
     '''.format(genotypefileFabaBase=genotypefileFabaBase,outputs=outputs)
 
@@ -30,7 +30,7 @@ def MakePedAndMapFiles(genotypefilecsv, outputs):
     options={}
 
     spec = '''
-    source activate Rprogram
+    conda activate Rprogram
     Rscript MakePedAndMapFile.R {missingness_threshold_snps} 
     '''.format(missingness_threshold_snps=param_two,outputs=outputs)
 
@@ -54,7 +54,7 @@ def PlinkPrep(inputs,outputs):
     outputs = outputs
     options = {}
     spec = '''
-    source activate plink
+    conda activate plink
     chmod u+x plinkGenotypeConv.sh
     ./plinkGenotypeConv.sh
     '''
@@ -67,7 +67,7 @@ def GenotypeFileReady(genofile, pedsix,outputs):
     outputs = outputs
     options = {}
     spec = '''
-    source activate python3
+    conda activate python3
     python MakeGenofileReadyforGRM.py {genofile} 
     '''.format(genofile=genofile,pedsix=pedsix,outputs=outputs)
 
