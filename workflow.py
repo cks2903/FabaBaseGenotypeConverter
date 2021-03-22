@@ -18,7 +18,7 @@ def LongtoWide(genotypefileFabaBase, outputs):
     options={}
     
     spec = '''
-    conda activate Rprogram
+    source activate Rprogram
     Rscript longtowide.R {genotypefileFabaBase} 
     '''.format(genotypefileFabaBase=genotypefileFabaBase,outputs=outputs)
 
@@ -30,7 +30,7 @@ def MakePedAndMapFiles(genotypefilecsv, outputs):
     options={}
 
     spec = '''
-    conda activate Rprogram
+    source activate Rprogram
     Rscript MakePedAndMapFile.R {missingness_threshold_snps} 
     '''.format(missingness_threshold_snps=param_two,outputs=outputs)
 
