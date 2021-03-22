@@ -136,7 +136,7 @@ Proceed to step 4 when "genotypes.ped" is generated
 
 Step4
 ```
-conda deactive
+conda deactivate
 source activate plink
 chmod u+x plinkGenotypeConv.sh
 ./plinkGenotypeConv.sh
